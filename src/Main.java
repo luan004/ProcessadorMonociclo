@@ -21,7 +21,9 @@ public class Main {
         Memory memory = new Memory(path);
         Registers registers = new Registers();
 
-
+        /**
+         * Inicializa o processador
+         */
         Processor processor = new Processor(memory, registers);
         processor.run();
     }

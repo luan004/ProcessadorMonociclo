@@ -18,18 +18,18 @@ public class Processor {
         while (running) {
             cycles++;
             if (cycles >= maxCycles) {
-                System.out.println("Limite máximo de ciclos atingido. Encerrando execução para evitar loop infinito.");
+                System.out.println("Limite máximo de ciclos " + maxCycles + " atingido.");
                 break;
             }
 
             short instr = memory.readInstruction(pc);
-            int format = (instr >> 15) & 0x1; // bit 15 é o formato
+            int format = (instr >> 15) & 0x1;
             int opcode;
 
             if (format == 0) {
-                opcode = (instr >> 9) & 0x3F;  // 6 bits opcode bits 9..4
+                opcode = (instr >> 9) & 0x3F;
             } else {
-                opcode = (instr >> 13) & 0x3;  // 2 bits opcode bits 13..12
+                opcode = (instr >> 13) & 0x3;
             }
 
             //System.out.printf("PC=%d Instr=0x%04X Formato=%d Opcode=%d%n", pc, instr & 0xFFFF, format, opcode);
@@ -81,7 +81,7 @@ public class Processor {
             } else {
                 // Formato I: opcode 2 bits, rd bits 12-10, imediato bits 9-0
                 int rd = (instr >> 10) & 0x7;
-                int imediato = instr & 0x3FF; // 10 bits imediato
+                int imediato = instr & 0x3FF;
 
                 switch (opcode) {
                     case 0: // jump
@@ -124,16 +124,15 @@ public class Processor {
                 }
                 System.out.println();
                 break;
-            case 2: // print newline
+            case 2: // print nova linha
                 System.out.println();
                 break;
             case 3: // print integer em r1
                 System.out.println(registers.get(1));
                 break;
             case 6: // sleep
-                // Aqui você pode fazer uma pausa na execução, ex:
                 try {
-                    int sleepTime = registers.get(1); // suponha que o tempo está no registrador 1
+                    int sleepTime = registers.get(1);
                     Thread.sleep(sleepTime * 1000L);  // tempo em segundos
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -141,7 +140,7 @@ public class Processor {
                 break;
 
             case 7: // get time
-                int currentTime = (int) (System.currentTimeMillis() / 1000); // tempo em segundos desde epoch
+                int currentTime = (int) (System.currentTimeMillis() / 1000); // tempo em timestamp
                 registers.set(1, (short) currentTime);
                 break;
             default:

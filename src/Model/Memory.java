@@ -6,7 +6,9 @@ public class Memory {
     private short[] instructions;
     private short[] data;
 
+
     public Memory(String binaryPath) {
+        // instancia a classe que o prof eduardo forneceu
         Lib loader = new Lib();
         this.instructions = loader.load_binary(binaryPath); // <- atribuir aqui o array retornado
         this.data = loader.get_data_memory();
